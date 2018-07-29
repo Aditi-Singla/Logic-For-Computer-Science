@@ -1,0 +1,14 @@
+AND AND p q NOT IFF p q
+p q AND p q IFF NOT AND
+AND AND AND OR p q OR p r NOT p NOT AND q r
+p q OR p r OR AND p NOT AND q r AND NOT AND
+NOT IMP OR AND p q AND NOT p r AND OR NOT p q OR p r
+p q AND p NOT r AND OR p NOT q OR p r OR AND IMP NOT
+AND AND IMP x NOT y IMP x y x
+x y NOT IMP x y IMP AND x AND
+AND AND IMP x y IMP NOT x y NOT y
+x y IMP x NOT y IMP AND y NOT AND
+AND AND IMP x y IMP NOT x y y
+x y IMP x NOT y IMP AND y AND
+AND AND IMP x NOT y IMP x y NOT x
+x y NOT IMP x y IMP AND x NOT AND

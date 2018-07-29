@@ -1,0 +1,17 @@
+(* The format has been borrowed from the example given in the 
+	ML-YACC library folder and modified as per requirement.
+	Link : https://packages.ubuntu.com/trusty/amd64/ml-yacc/filelist *)
+
+Group is
+
+#if defined (NEW_CM)
+	$/basis.cm
+	$/ml-yacc-lib.cm
+#else
+	ml-yacc-lib.cm
+#endif
+
+	lcs.lex
+	lcs.grm:MLYacc
+	datatypes.sml
+	parser.sml
