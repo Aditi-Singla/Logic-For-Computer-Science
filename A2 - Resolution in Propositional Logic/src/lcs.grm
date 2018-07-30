@@ -1,0 +1,58 @@
+
+open AST
+
+%%
+
+%name Lcs
+
+%term ATOMVAL of string | SPACEVAL of string | IFFVAL | IFVAL | THENVAL | ELSEVAL |
+		EOF | ORVAL | ANDVAL | NOTVAL | LEFTP | RIGHTP | TRUEVAL | FALSEVAL
+%nonterm start of Prop | stmt of Prop | stmtA of Prop | stmtB of Prop
+		| stmtC of Prop | stmtD of Prop | stmtE of Prop | stmtF of Prop
+		| alist of string
+
+%pos int
+%eop EOF
+
+%noshift EOF
+
+%right IFFVAL
+%left ORVAL
+%left ANDVAL
+%nonassoc NOTVAL LEFTP RIGHTP TRUEVAL FALSEVAL
+
+%verbose
+%%
+
+start : stmt 										(stmt)
+	  | SPACEVAL stmt 								(stmt)
+
+stmt  : stmtA IFFVAL stmt 							(IFF(stmtA,stmt))
+	  | stmtA 										(stmtA)
+
+stmtA : IFVAL stmtA THENVAL stmtA 					(IMP(stmtA1,stmtA2))
+	  | IFVAL stmtA THENVAL stmtB ELSEVAL stmtA 	(ITE(stmtA1,stmtB,stmtA2))
+	  | stmtC 										(stmtC)
+
+stmtB : IFVAL stmtA THENVAL stmtB ELSEVAL stmtB 	(ITE(stmtA,stmtB1,stmtB2))
+	  | stmtC										(stmtC)
+
+stmtC : stmtC ORVAL stmtD							(OR(stmtC,stmtD))
+	  | stmtD										(stmtD)
+
+stmtD : stmtD ANDVAL stmtE							(AND(stmtD,stmtE))
+	  | stmtE										(stmtE)
+
+stmtE : NOTVAL stmtE								(NOT(stmtE))
+	  | stmtF										(stmtF)
+
+stmtF : TRUEVAL										(TOP)
+	  | FALSEVAL									(BOTTOM)
+	  | alist										(ATOM(alist))
+	  | LEFTP stmt RIGHTP							(stmt)
+
+alist : ATOMVAL SPACEVAL alist						(ATOMVAL ^ SPACEVAL ^ alist)
+	  | ATOMVAL	alist								(ATOMVAL ^ " " ^ alist)
+	  | ATOMVAL	SPACEVAL							(ATOMVAL)
+	  | ATOMVAL										(ATOMVAL)
+
