@@ -10,5 +10,5 @@ Details on FOL signature and explanation are [here](./Report.pdf).
 1. To run - 
 
     ```bash
-    ./src/run.sh <input-file> <output-file>
+    ./src/run.sh
     ```
